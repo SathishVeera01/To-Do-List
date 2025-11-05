@@ -15,8 +15,8 @@ class task(db.Model):
     def __repr__(self):
         return f"Task {self.id}"
 
-@app.before_first_request
-def create_tables():
+# ✅ Create DB tables safely
+with app.app_context():
     db.create_all()
 
 @app.route("/", methods=["GET", "POST"])
@@ -49,7 +49,7 @@ def delete(id: int):
 def update(id: int):
     update_task = task.query.get_or_404(id)
     if request.method == "POST":
-        update_task.content = request.form['content']
+        update_task.content = request.form["content"]
         try:
             db.session.commit()
             return redirect("/")
