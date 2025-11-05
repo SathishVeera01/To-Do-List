@@ -1,0 +1,28 @@
+{%extends "base.html"%} {%block head %}
+<title>Home</title>
+{%endblock%} {%block body%}
+<div class="container">
+  <h1>ToDo List</h1>
+  <form action="/" method="POST">
+    <input type="text" id="content" name="content" />
+    <input type="submit" value="ADD" id="btn-add" />
+  </form>
+  <table>
+    <tr>
+      <th>TASK</th>
+      <th>TIME</th>
+      <th>ACTION</th>
+    </tr>
+    {% for task in tasks %}
+    <tr>
+      <td>{{task.content}}</td>
+      <td>{{task.created.date()}}</td>
+      <td>
+        <a href="/delete/{{task.id}}">Delete</a>
+        <a href="/update/{{task.id}}">Update</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{%endblock%}
